@@ -5,6 +5,7 @@ import com.example.SpringEx11B.proxies.PaymentsProxy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -18,7 +19,8 @@ public class PaymentsController {
     }
 
     @PostMapping("/payment")
-    public Payment createPayment(@RequestBody Payment payment) {
-        return paymentsProxy.createPayment(payment);
+    public Mono<Payment> createPayment(@RequestBody Payment payment) {
+        String requestId = UUID.randomUUID().toString();
+        return paymentsProxy.createPayment(requestId, payment);
     }
 }
